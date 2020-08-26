@@ -1,10 +1,35 @@
 var http=require('http')
 var fs=require('fs')
-http.createServer(function(req,res){
-    fs.readFile('example.html',function (err,data){
-    res.writeHead(200,{'Content-Type':'text/html'})
-    res.write(data)
-    res.end()
-})  
+var url=require('url')
+
+
+http.createServer(function(req,res)
+{
+    var q=url.parse(req.url,true)
     
-}).listen(8080)
+    if (q.path=='/index')
+        {
+           fs.readFile('index.html',function (err,data)
+           {
+             res.writeHead(200,{'Content-Type':'text/html'})
+             res.write(data)
+             res.end()
+           }
+        )
+        }
+   
+        if (q.path=='/login')
+        {
+           fs.readFile('login.html',function (err,data)
+           {
+             res.writeHead(200,{'Content-Type':'text/html'})
+             res.write(data)
+             res.end()
+           }
+        )
+        }
+   
+        
+} 
+   ).listen(8080)
+
